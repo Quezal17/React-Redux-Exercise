@@ -1,10 +1,10 @@
 import React from 'react';
 import './css/components.css';
 import Results from './OutputResultsComponents.js';
-import Diagramma from './Diagramma.js';
+import Diagram from './Diagram.js';
 import i18next from 'i18next';
 
-import { Bottone, Titoletto, LabelInput } from './Components.js';
+import { Button, SecondaryTitle, LabelInput } from './Components.js';
 
 export default class RegrLin extends React.Component {
     constructor(props) {
@@ -12,23 +12,23 @@ export default class RegrLin extends React.Component {
 
         this.state = {
             datasetName: '',
-            asseXName: '',
-            asseYName: '',
-            valori: [],
+            axisXName: '',
+            axisYName: '',
+            values: [],
             x: [],
             y: [],
             Regr: [],
-            stimaX: '',
-            stimaY: '',
-            stimaXResult: [],
-            stimaYResult: [],
-            mediaX: '',
-            mediaY: '',
-            varianzaX: '',
-            varianzaY: '',
+            estimateX: '',
+            estimateY: '',
+            estimateXResult: [],
+            estimateYResult: [],
+            averageX: '',
+            averageY: '',
+            varianceX: '',
+            varianceY: '',
             devstdX: '',
             devstdY: '',
-            covarianza: '',
+            covariance: '',
             pearson: '',
             coeffM: '',
             coeffQ: '',
@@ -40,63 +40,63 @@ export default class RegrLin extends React.Component {
             confidMin: [],
             confidMax: [],
             maxY: 100,
-            alfa: 0.05
+            alpha: 0.05
         };
     }
 
-    checkValori() {
-        const { valori, alfa } = this.state;
-        if (valori.length < 3 || alfa === '' || alfa < 0 || alfa > 1)
+    checkValues() {
+        const { values, alpha } = this.state;
+        if (values.length < 3 || alpha === '' || alpha < 0 || alpha > 1)
             return false;
-        for (let i = 0; i < valori.length; i++) {
-            if (valori[i].assex === '' || valori[i].assey === '')
+        for (let i = 0; i < values.length; i++) {
+            if (values[i].assex === '' || values[i].assey === '')
                 return false;
         }
         return true;
     }
 
-    onClickCalcola() {
-        if (this.checkValori()) {
-            const { valori } = this.state;
+    onClickCalculate() {
+        if (this.checkValues()) {
+            const { values } = this.state;
             let x = [];
             let y = [];
 
-            for (let i = 0; i < valori.length; i++) {
-                x[i] = Number(valori[i].x);
-                y[i] = Number(valori[i].y);
+            for (let i = 0; i < values.length; i++) {
+                x[i] = Number(values[i].x);
+                y[i] = Number(values[i].y);
             }
 
             this.setState({
                 x: x,
                 y: y,
-                stimaX: '',
-                stimaY: '',
-                stimaXResult: [],
-                stimaYResult: [],
-            }, () => { this.calcolaMediaX() })
+                estimateX: '',
+                estimateY: '',
+                estimateXResult: [],
+                estimateYResult: [],
+            }, () => { this.calculateAverageX() })
         }
     }
 
     onClickReset() {
         this.setState({
             datasetName: '',
-            asseXName: '',
-            asseYName: '',
-            valori: [],
+            axisXName: '',
+            axisYName: '',
+            values: [],
             x: [],
             y: [],
             Regr: [],
-            stimaX: '',
-            stimaY: '',
-            stimaXResult: [],
-            stimaYResult: [],
-            mediaX: '',
-            mediaY: '',
-            varianzaX: '',
-            varianzaY: '',
+            estimateX: '',
+            estimateY: '',
+            estimateXResult: [],
+            estimateYResult: [],
+            averageX: '',
+            averageY: '',
+            varianceX: '',
+            varianceY: '',
             devstdX: '',
             devstdY: '',
-            covarianza: '',
+            covariance: '',
             pearson: '',
             coeffM: '',
             coeffQ: '',
@@ -108,68 +108,68 @@ export default class RegrLin extends React.Component {
             confidMin: [],
             confidMax: [],
             maxY: 100,
-            alfa: 0.05
+            alpha: 0.05
         })
     }
 
-    onClickStima() {
-        const { stimaX, stimaY } = this.state;
-        if (stimaX !== '')
-            this.setStimaY();
-        else if (stimaY !== '')
-            this.setStimaX();
+    onClickEstimate() {
+        const { estimateX, estimateY } = this.state;
+        if (estimateX !== '')
+            this.setEstimateY();
+        else if (estimateY !== '')
+            this.setEstimateX();
     }
 
-    setStimaX() {
-        const { stimaY, mMin, mMax, qMin, qMax } = this.state;
+    setEstimateX() {
+        const { estimateY, mMin, mMax, qMin, qMax } = this.state;
         let x = [];
-        x[0] = (stimaY - qMin) / mMin;
-        x[1] = (stimaY - qMax) / mMax;
+        x[0] = (estimateY - qMin) / mMin;
+        x[1] = (estimateY - qMax) / mMax;
         this.setState({
-            stimaXResult: x,
-            stimaYResult: []
+            estimateXResult: x,
+            estimateYResult: []
         })
     }
 
-    setStimaY() {
-        const { stimaX, mMin, mMax, qMin, qMax } = this.state;
+    setEstimateY() {
+        const { estimateX, mMin, mMax, qMin, qMax } = this.state;
         let y = [];
-        y[0] = mMin * stimaX + qMin;
-        y[1] = mMax * stimaX + qMax;
+        y[0] = mMin * estimateX + qMin;
+        y[1] = mMax * estimateX + qMax;
         this.setState({
-            stimaXResult: [],
-            stimaYResult: y
+            estimateXResult: [],
+            estimateYResult: y
         })
     }
 
-    onClickAggiungi() {
-        const { valori } = this.state;
+    onClickAdd() {
+        const { values } = this.state;
         this.setState({
-            valori: [...valori, { x: "", y: "" }]
+            values: [...values, { x: "", y: "" }]
         })
     }
 
-    onClickRimuovi(index) {
-        const { valori } = this.state;
-        valori.splice(index, 1);
+    onClickDelete(index) {
+        const { values } = this.state;
+        values.splice(index, 1);
         this.setState({
-            valori: valori
+            values: values
         })
     }
 
     onChangeInputX(e, index) {
-        const { valori } = this.state;
-        valori[index]["x"] = e.target.value;
+        const { values } = this.state;
+        values[index]["x"] = e.target.value;
         this.setState({
-            valori: valori
+            values: values
         })
     }
 
     onChangeInputY(e, index) {
-        const { valori } = this.state;
-        valori[index]["y"] = e.target.value;
+        const { values } = this.state;
+        values[index]["y"] = e.target.value;
         this.setState({
-            valori: valori
+            values: values
         })
     }
 
@@ -180,141 +180,141 @@ export default class RegrLin extends React.Component {
         })
     }
 
-    onChangeAsseXName(e) {
-        let asseXName = e.target.value;
+    onChangeAxisXName(e) {
+        let axisXName = e.target.value;
         this.setState({
-            asseXName: asseXName
+            axisXName: axisXName
         })
     }
 
-    onChangeAsseYName(e) {
-        let asseYName = e.target.value;
+    onChangeAxisYName(e) {
+        let axisYName = e.target.value;
         this.setState({
-            asseYName: asseYName
+            axisYName: axisYName
         })
     }
 
-    onChangeAlfa(e) {
-        let alfa = e.target.value;
-        this.setState({ alfa: alfa })
+    onChangeAlpha(e) {
+        let alpha = e.target.value;
+        this.setState({ alpha: alpha })
     }
 
-    onChangeStimaX(e) {
-        let stimaX = e.target.value;
+    onChangeEstimateX(e) {
+        let estimateX = e.target.value;
         this.setState({
-            stimaX: stimaX,
-            stimaY: '',
-            stimaXResult: [],
-            stimaYResult: []
+            estimateX: estimateX,
+            estimateY: '',
+            estimateXResult: [],
+            estimateYResult: []
         })
     }
 
-    onChangeStimaY(e) {
-        let stimaY = e.target.value;
+    onChangeEstimateY(e) {
+        let estimateY = e.target.value;
         this.setState({
-            stimaX: '',
-            stimaY: stimaY,
-            stimaXResult: [],
-            stimaYResult: []
+            estimateX: '',
+            estimateY: estimateY,
+            estimateXResult: [],
+            estimateYResult: []
         })
     }
 
-    calcolaMediaX() {
+    calculateAverageX() {
         const { x } = this.state;
         let n = x.length;
-        let media = 0;
+        let average = 0;
         for (let i = 0; i < n; i++) {
-            media += x[i];
+            average += x[i];
         }
-        media /= n;
+        average /= n;
         this.setState({
-            mediaX: media
-        }, () => { this.calcolaMediaY() })
+            averageX: average
+        }, () => { this.calculateAverageY() })
     }
 
-    calcolaMediaY() {
+    calculateAverageY() {
         const { y } = this.state;
         let n = y.length;
-        let media = 0;
+        let average = 0;
         for (let i = 0; i < n; i++) {
-            media += y[i];
+            average += y[i];
         }
-        media /= n;
+        average /= n;
         this.setState({
-            mediaY: media
-        }, () => { this.calcolaCovarianza() })
+            averageY: average
+        }, () => { this.calculateCovariance() })
     }
 
-    calcolaCovarianza() {
-        const { x, y, mediaX, mediaY } = this.state;
+    calculateCovariance() {
+        const { x, y, averageX, averageY } = this.state;
         let n = x.length;
-        let sommatore = 0;
+        let adder = 0;
         for (let i = 0; i < n; i++) {
-            sommatore += (x[i] - mediaX) * (y[i] - mediaY);
+            adder += (x[i] - averageX) * (y[i] - averageY);
         }
-        sommatore /= n;
+        adder /= n;
         this.setState({
-            covarianza: sommatore
-        }, () => { this.calcolaVarianzaX() })
+            covariance: adder
+        }, () => { this.calculateVarianceX() })
     }
 
-    calcolaVarianzaX() {
+    calculateVarianceX() {
         const { x } = this.state;
-        let sommatore = this.calcolaSommatoriaVarianzaX();
-        sommatore /= x.length;
+        let adder = this.calculateSummationVarianceX();
+        adder /= x.length;
         this.setState({
-            varianzaX: sommatore
-        }, () => { this.calcolaVarianzaY() })
+            varianceX: adder
+        }, () => { this.calculateVarianceY() })
     }
 
-    calcolaVarianzaY() {
-        const { y, mediaY } = this.state;
+    calculateVarianceY() {
+        const { y, averageY } = this.state;
         let n = y.length;
-        let sommatore = 0;
+        let adder = 0;
         for (let i = 0; i < n; i++) {
-            sommatore += Math.pow((y[i] - mediaY), 2);
+            adder += Math.pow((y[i] - averageY), 2);
         }
-        sommatore /= n;
+        adder /= n;
         this.setState({
-            varianzaY: sommatore
-        }, () => { this.calcolaDevstdX() })
+            varianceY: adder
+        }, () => { this.calculateDevstdX() })
     }
 
-    calcolaDevstdX() {
-        const { varianzaX } = this.state;
-        let devstd = Math.sqrt(varianzaX);
+    calculateDevstdX() {
+        const { varianceX } = this.state;
+        let devstd = Math.sqrt(varianceX);
         this.setState({
             devstdX: devstd
-        }, () => { this.calcolaDevstdY() })
+        }, () => { this.calculateDevstdY() })
     }
 
-    calcolaDevstdY() {
-        const { varianzaY } = this.state;
-        let devstd = Math.sqrt(varianzaY);
+    calculateDevstdY() {
+        const { varianceY } = this.state;
+        let devstd = Math.sqrt(varianceY);
         this.setState({
             devstdY: devstd
-        }, () => { this.calcolaPearson() })
+        }, () => { this.calculatePearson() })
     }
 
-    calcolaPearson() {
-        const { covarianza, devstdX, devstdY } = this.state;
-        let pearson = covarianza / (devstdX * devstdY);
+    calculatePearson() {
+        const { covariance, devstdX, devstdY } = this.state;
+        let pearson = covariance / (devstdX * devstdY);
         this.setState({
             pearson: pearson
-        }, () => { this.calcolaCoeffM() })
+        }, () => { this.calculateCoeffM() })
     }
 
-    calcolaCoeffM() {
-        const { covarianza, varianzaX } = this.state;
-        let m = covarianza / varianzaX;
+    calculateCoeffM() {
+        const { covariance, varianceX } = this.state;
+        let m = covariance / varianceX;
         this.setState({
             coeffM: m
-        }, () => { this.calcolaCoeffQ() })
+        }, () => { this.calculateCoeffQ() })
     }
 
-    calcolaCoeffQ() {
-        const { mediaX, mediaY, covarianza, varianzaX } = this.state;
-        let q = mediaY - (mediaX * covarianza / varianzaX);
+    calculateCoeffQ() {
+        const { averageX, averageY, covariance, varianceX } = this.state;
+        let q = averageY - (averageX * covariance / varianceX);
         this.setState({
             coeffQ: q
         }, () => { this.findXMinMax() })
@@ -334,52 +334,52 @@ export default class RegrLin extends React.Component {
                 max = x[i];
 
         Regr[0] = Number(min);
-        Regr[1] = this.calcolaStimaY(min);
+        Regr[1] = this.calculateEstimateY(min);
         Regr[2] = Number(max);
-        Regr[3] = this.calcolaStimaY(max);
+        Regr[3] = this.calculateEstimateY(max);
         this.setState({
             Regr: Regr
-        }, () => { this.calcolaQuantile() })
+        }, () => { this.calculateQuantile() })
     }
 
-    calcolaQuantile() {
-        const { x, alfa } = this.state;
+    calculateQuantile() {
+        const { x, alpha } = this.state;
         var { jStat } = require('jstat');
-        var ordine = 1 - (alfa / 2);
+        var ordine = 1 - (alpha / 2);
         var r = jStat.studentt.inv(ordine, x.length - 2);
         this.setState({
             quantile: r
-        }, () => { this.calcolaIntervallo() })
+        }, () => { this.calculateInterval() })
     }
 
-    calcolaIntervallo() {
-        const { x, quantile, mediaX, coeffM, coeffQ, Regr } = this.state;
-        let stimaTemp;
+    calculateInterval() {
+        const { x, quantile, averageX, coeffM, coeffQ, Regr } = this.state;
+        let estimateTemp;
         let confidMin = [];
         let confidMax = [];
         let e, mMin, mMax, qMin, qMax;
         let n = x.length;
 
-        let stimeY = [];
+        let estimatesY = [];
         for (let i = 0; i < n; i++) {
-            stimeY[i] = this.calcolaStimaY(x[i]);
+            estimatesY[i] = this.calculateEstimateY(x[i]);
         }
-        let s2RES = this.calcolaS2RES(stimeY);
-        let sumVarX = this.calcolaSommatoriaVarianzaX();
+        let s2RES = this.calculateS2RES(estimatesY);
+        let sumVarX = this.calculateSummationVarianceX();
 
         e = quantile * Math.sqrt(s2RES / sumVarX);
         mMin = coeffM - e;
         mMax = coeffM + e;
 
-        e = quantile * Math.sqrt(s2RES * (1 / n + Math.pow(mediaX, 2) / sumVarX));
+        e = quantile * Math.sqrt(s2RES * (1 / n + Math.pow(averageX, 2) / sumVarX));
         qMin = coeffQ - e;
         qMax = coeffQ + e;
 
         let max = mMax * x[0] + qMax;
         for (let i = 0; i < n; i++) {
-            stimaTemp = mMax * x[i] + qMax;
-            if (stimaTemp > max)
-                max = stimaTemp;
+            estimateTemp = mMax * x[i] + qMax;
+            if (estimateTemp > max)
+                max = estimateTemp;
         }
 
         confidMin[0] = Regr[0];
@@ -403,56 +403,56 @@ export default class RegrLin extends React.Component {
         })
     }
 
-    calcolaStimaY(x) {
+    calculateEstimateY(x) {
         const { coeffM, coeffQ } = this.state;
         return coeffM * x + coeffQ;
     }
 
-    calcolaSommatoriaVarianzaX() {
-        const { x, mediaX } = this.state;
-        let sommatore = 0;
+    calculateSummationVarianceX() {
+        const { x, averageX } = this.state;
+        let adder = 0;
         for (let i = 0; i < x.length; i++) {
-            sommatore += Math.pow((x[i] - mediaX), 2);
+            adder += Math.pow((x[i] - averageX), 2);
         }
-        return sommatore;
+        return adder;
     }
 
-    calcolaS2RES(stimeY) {
+    calculateS2RES(estimatesY) {
         const { y } = this.state;
         let s2res = 0;
         for (let i = 0; i < y.length; i++) {
-            s2res += Math.pow((y[i] - stimeY[i]), 2);
+            s2res += Math.pow((y[i] - estimatesY[i]), 2);
         }
         return s2res / (y.length - 2);
     }
 
-    renderInputLabel(stringa, id, tipo, valore, event) {
+    renderInputLabel(word, id, type, value, event) {
         return (
             <div className="row">
                 <LabelInput
-                    stringa={stringa}
-                    tipo={tipo}
+                    word={word}
+                    type={type}
                     id={id}
-                    value={valore}
+                    value={value}
                     onChange={event}
                 />
             </div>
         );
     }
 
-    renderTitoletto(val) {
+    renderSecondaryTitle(val) {
         return (
-            <Titoletto
-                stringa={val}
+            <SecondaryTitle
+                word={val}
             />
         );
     }
 
-    renderBottone(val, azione, name, css) {
+    renderButton(val, action, name, css) {
         return (
-            <Bottone
-                stringa={val}
-                onClick={azione}
+            <Button
+                word={val}
+                onClick={action}
                 classe={css}
                 name={name}
             />
@@ -461,62 +461,62 @@ export default class RegrLin extends React.Component {
 
     render() {
         const {
-            datasetName, asseXName, asseYName,
+            datasetName, axisXName, axisYName,
             x, y,
-            stimaX, stimaY, stimaXResult, stimaYResult,
-            covarianza, pearson,
+            estimateX, estimateY, estimateXResult, estimateYResult,
+            covariance, pearson,
             coeffM, coeffQ,
-            valori,
+            values,
             Regr,
             confidMin,
             confidMax,
             maxY,
-            alfa,
+            alpha,
             mMin, mMax, qMin, qMax
         } = this.state;
 
         return (
             <div className="container-fluid">
                 <div className="row">
-                    <div className="col rounded-bottom MainTitolo">
+                    <div className="col rounded-bottom MainTitle">
                         <h1 className="align-middle">{i18next.t('title')}</h1>
                     </div>
                 </div>
                 <div className="row RegrLin">
                     <div className="col-3 rounded main-Insert">
                         <div className="row">
-                            {this.renderTitoletto(i18next.t('insertDataTitle'))}
+                            {this.renderSecondaryTitle(i18next.t('insertDataTitle'))}
 
                         </div>
                         {this.renderInputLabel(i18next.t('nameDatasetTag'), "dname", "text", datasetName, (e) => this.onChangeDatasetName(e))}
-                        {this.renderInputLabel(i18next.t('nameXAxisTag'), "xname", "text", asseXName, (e) => this.onChangeAsseXName(e))}
-                        {this.renderInputLabel(i18next.t('nameYAxisTag'), "yname", "text", asseYName, (e) => this.onChangeAsseYName(e))}
-                        {this.renderInputLabel(i18next.t('alphaTag'), "alpha", "number", alfa, (e) => this.onChangeAlfa(e))}
+                        {this.renderInputLabel(i18next.t('nameXAxisTag'), "xname", "text", axisXName, (e) => this.onChangeAxisXName(e))}
+                        {this.renderInputLabel(i18next.t('nameYAxisTag'), "yname", "text", axisYName, (e) => this.onChangeAxisYName(e))}
+                        {this.renderInputLabel(i18next.t('alphaTag'), "alpha", "number", alpha, (e) => this.onChangeAlpha(e))}
                         <div className="row">
-                            {this.renderBottone(i18next.t('addValueButtonText'), () => this.onClickAggiungi(), "AggiungiButton", "btn btn-info")}
+                            {this.renderButton(i18next.t('addValueButtonText'), () => this.onClickAdd(), "AddButton", "btn btn-info")}
                         </div>
                         <div className="DynamicPart">
                             {
-                                this.state.valori.map((val, index) => {
+                                this.state.values.map((val, index) => {
                                     return (
                                         <div key={index}>
                                             <div className="row">
                                                 <LabelInput
-                                                    stringa="X"
-                                                    tipo="number"
+                                                    word="X"
+                                                    type="number"
                                                     id={"X" + index}
-                                                    value={valori[index].x}
+                                                    value={values[index].x}
                                                     onChange={(e) => this.onChangeInputX(e, index)}
                                                 />
                                                 <LabelInput
-                                                    stringa="Y"
-                                                    tipo="number"
+                                                    word="Y"
+                                                    type="number"
                                                     id={"Y" + index}
-                                                    value={valori[index].y}
+                                                    value={values[index].y}
                                                     onChange={(e) => this.onChangeInputY(e, index)}
                                                 />
 
-                                                {this.renderBottone(i18next.t('deleteButtonText'), () => this.onClickRimuovi(index), "RimuoviButton", "btn btn-danger")}
+                                                {this.renderButton(i18next.t('deleteButtonText'), () => this.onClickDelete(index), "DeleteButton", "btn btn-danger")}
                                             </div>
                                         </div>
                                     )
@@ -524,8 +524,8 @@ export default class RegrLin extends React.Component {
                             }
                         </div>
                         <div className="row">
-                            {this.renderBottone(i18next.t('calculateButtonText'), () => this.onClickCalcola(), "CalcolaButton", "btn btn-success")}
-                            {this.renderBottone(i18next.t('resetButtonText'), () => this.onClickReset(), "ResetButton", "btn btn-warning")}
+                            {this.renderButton(i18next.t('calculateButtonText'), () => this.onClickCalculate(), "CalculateButton", "btn btn-success")}
+                            {this.renderButton(i18next.t('resetButtonText'), () => this.onClickReset(), "ResetButton", "btn btn-warning")}
                             <div className="col"></div>
                         </div>
                         <div className="row">
@@ -537,12 +537,12 @@ export default class RegrLin extends React.Component {
                     </div>
                     <div className="col-7  justify-content-md-center rounded">
                         <div className="row">
-                            <Diagramma
+                            <Diagram
                                 x={x}
                                 y={y}
                                 datasetName={datasetName}
-                                asseXName={asseXName}
-                                asseYName={asseYName}
+                                axisXName={axisXName}
+                                axisYName={axisYName}
                                 Regr={Regr}
                                 confidMin={confidMin}
                                 confidMax={confidMax}
@@ -552,19 +552,19 @@ export default class RegrLin extends React.Component {
                         <Results
                             coeffM={coeffM}
                             coeffQ={coeffQ}
-                            covarianza={covarianza}
+                            covariance={covariance}
                             pearson={pearson}
-                            onClick={() => this.onClickStima()}
-                            resultX={stimaXResult}
-                            resultY={stimaYResult}
-                            valueX={stimaX}
-                            valueY={stimaY}
+                            onClick={() => this.onClickEstimate()}
+                            resultX={estimateXResult}
+                            resultY={estimateYResult}
+                            valueX={estimateX}
+                            valueY={estimateY}
                             mMin={mMin}
                             mMax={mMax}
                             qMin={qMin}
                             qMax={qMax}
-                            onChangeStimaX={(e) => this.onChangeStimaX(e)}
-                            onChangeStimaY={(e) => this.onChangeStimaY(e)}
+                            onChangeEstimateX={(e) => this.onChangeEstimateX(e)}
+                            onChangeEstimateY={(e) => this.onChangeEstimateY(e)}
                         />
                     </div>
                 </div>

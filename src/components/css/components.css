@@ -4,7 +4,7 @@ body{
     font-family: sans-serif;
 }
 
-.MainTitolo{
+.MainTitle{
     color: #FFFFFF;
     text-align: center;
     background-color: #00BFFF;
@@ -26,7 +26,7 @@ body{
     border-color: #0000FF;
 }
 
-.StimaButton{
+.EstimateButton{
     display: flex;
     justify-content: center;
 }
@@ -34,7 +34,7 @@ body{
     color: #FFFFFF!important;
 }
 
-.AggiungiButton, .CalcolaButton, .ResetButton, .StimaButton{
+.AddButton, .CalculateButton, .ResetButton, .EstimateButton{
     margin-bottom: 16px;
 }
 
@@ -42,7 +42,7 @@ body{
     color: #FFFFFF;
 }
 
-.Titoletto{
+.STitle{
     font-size: 20px;
     text-align: center;
     font-weight: bold;
@@ -58,7 +58,7 @@ body{
     margin-left: 10%;
 }
 
-.main-Diagramma{
+.main-Diagram{
     width: 800px;
     height: 400px;
 }

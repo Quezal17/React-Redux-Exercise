@@ -1,45 +1,45 @@
 import React from 'react';
 import i18next from 'i18next';
-import { LabelResult, Titoletto, Bottone, LabelInput } from './Components.js';
+import { LabelResult, SecondaryTitle, Button, LabelInput } from './Components.js';
 import Counter from './Counter';
 
 export default class Results extends React.Component {
     renderLabelResult(val, r) {
         return (
             <LabelResult
-                stringa={val}
+                word={val}
                 result={r.toString()}
             />
         );
     }
 
-    renderTitoletto(val) {
+    renderSecondaryTitle(val) {
         return (
-            <Titoletto
-                stringa={val}
+            <SecondaryTitle
+                word={val}
             />
         );
     }
 
-    renderBottone(val, azione, name, css) {
+    renderButton(val, action, name, css) {
         return (
-            <Bottone
-                stringa={val}
-                onClick={azione}
+            <Button
+                word={val}
+                onClick={action}
                 classe={css}
                 name={name}
             />
         );
     }
 
-    renderInputLabel(stringa, id, tipo, valore, evento) {
+    renderInputLabel(word, id, type, value, event) {
         return (
             <LabelInput
-                stringa={stringa}
-                tipo={tipo}
+                word={word}
+                type={type}
                 id={id}
-                value={valore}
-                onChange={evento}
+                value={value}
+                onChange={event}
             />
         );
     }
@@ -61,18 +61,18 @@ export default class Results extends React.Component {
         mMin = mMin.toFixed(3);
         let mMax = Number(this.props.mMax);
         mMax = mMax.toFixed(3);
-        let resultStimaX = this.props.resultX;
-        let resultStimaY = this.props.resultY;
+        let resultEstimateX = this.props.resultX;
+        let resultEstimateY = this.props.resultY;
         let result = '';
-        if (resultStimaX.length > 0)
-            result = "x: [" + Number(resultStimaX[0]).toFixed(3) + " , " + Number(resultStimaX[1]).toFixed(3) + "]";
-        else if (resultStimaY.length > 0)
-            result = "y: [" + Number(resultStimaY[0]).toFixed(3) + " , " + Number(resultStimaY[1]).toFixed(3) + "]";
+        if (resultEstimateX.length > 0)
+            result = "x: [" + Number(resultEstimateX[0]).toFixed(3) + " , " + Number(resultEstimateX[1]).toFixed(3) + "]";
+        else if (resultEstimateY.length > 0)
+            result = "y: [" + Number(resultEstimateY[0]).toFixed(3) + " , " + Number(resultEstimateY[1]).toFixed(3) + "]";
 
         return (
             <div className="main-Results">
                 <div className="row">
-                    <div className="col equazione">
+                    <div className="col equation">
                         <label>{i18next.t('lineEquationTag')}: <strong>y = m x + q</strong></label>
                     </div>
                 </div>
@@ -85,8 +85,8 @@ export default class Results extends React.Component {
                     {this.renderLabelResult(i18next.t('pearsonCoefficient'), pearson)}
                 </div>
                 <div className="row">
-                    {this.renderTitoletto(i18next.t('confidenceIntervalTitle'))}
-                    {this.renderTitoletto(i18next.t('estimatedValuesTitle'))}
+                    {this.renderSecondaryTitle(i18next.t('confidenceIntervalTitle'))}
+                    {this.renderSecondaryTitle(i18next.t('estimatedValuesTitle'))}
                 </div>
                 <div className="row">
                     <div className="col">
@@ -95,8 +95,8 @@ export default class Results extends React.Component {
                         </span>
                     </div>
                     <div className="col"></div>
-                    {this.renderInputLabel("X", "stimaX", "number", this.props.valueX, this.props.onChangeStimaX)}
-                    {this.renderInputLabel("Y", "stimaY", "number", this.props.valueY, this.props.onChangeStimaY)}
+                    {this.renderInputLabel("X", "EstimateX", "number", this.props.valueX, this.props.onChangeEstimateX)}
+                    {this.renderInputLabel("Y", "EstimateY", "number", this.props.valueY, this.props.onChangeEstimateY)}
                 </div>
                 <div className="row">
                     <div className="col">
@@ -105,7 +105,7 @@ export default class Results extends React.Component {
                         </span>
                     </div>
                     <div className="col"></div>
-                    {this.renderBottone(i18next.t('estimateButtonText'), () => this.props.onClick(), "StimaButton", "btn btn-info")}
+                    {this.renderButton(i18next.t('estimateButtonText'), () => this.props.onClick(), "EstimateButton", "btn btn-info")}
                     <div className="col">
                         <span>
                             {result}

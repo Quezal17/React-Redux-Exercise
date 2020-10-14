@@ -3,7 +3,7 @@ import Chart from 'chart.js';
 import 'chartjs-chart-error-bars/build/Chart.ErrorBars.js';
 let myLineChart;
 
-export default class Diagramma extends React.PureComponent {
+export default class Diagram extends React.PureComponent {
     chartRef = React.createRef();
 
     componentDidMount() {
@@ -16,9 +16,9 @@ export default class Diagramma extends React.PureComponent {
 
     buildChart = () => {
         const myChartRef = this.chartRef.current.getContext("2d");
-        let {datasetName, asseXName, asseYName, Regr, x, y, confidMin, confidMax, maxY} = this.props;
+        let {datasetName, axisXName, axisYName, Regr, x, y, confidMin, confidMax, maxY} = this.props;
 
-        var valori = [];
+        var values = [];
         var obj;
         for(let i=0;i<x.length;i++) {
             obj={
@@ -29,7 +29,7 @@ export default class Diagramma extends React.PureComponent {
                 yMin: [],
                 yMax: []
             }
-            valori.push(obj);
+            values.push(obj);
         }
 
         if (typeof myLineChart !== "undefined") myLineChart.destroy();
@@ -39,7 +39,7 @@ export default class Diagramma extends React.PureComponent {
             data: {
                 datasets: [
                     {
-                        data: valori,
+                        data: values,
                         pointBackgroundColor: "#8A2BE2",
                         borderColor: "#8A2BE2",
                         fill: false,
@@ -108,7 +108,7 @@ export default class Diagramma extends React.PureComponent {
                     yAxes: [{
                         scaleLabel: {
                             display: true,
-                            labelString: asseYName,
+                            labelString: axisYName,
                             fontFamily: "sans-serif",
                             fontSize: 18,
                             fontStyle: "bold"
@@ -122,7 +122,7 @@ export default class Diagramma extends React.PureComponent {
                     xAxes: [{
                         scaleLabel: {
                             display: true,
-                            labelString: asseXName,
+                            labelString: axisXName,
                             fontFamily: "sans-serif",
                             fontSize: 18,
                             fontStyle: "bold"
@@ -167,7 +167,7 @@ export default class Diagramma extends React.PureComponent {
 
     render() {
         return (
-            <div className="main-Diagramma">
+            <div className="main-Diagram">
                 <canvas
                     className="img-fluid"
                     id="myChart"

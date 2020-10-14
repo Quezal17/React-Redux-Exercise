@@ -1,0 +1,82 @@
+body{
+    background-color: #E0FFFF;
+    font-size: 18px;
+    font-family: sans-serif;
+}
+
+.MainTitolo{
+    color: #FFFFFF;
+    text-align: center;
+    background-color: #00BFFF;
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+    margin-bottom: 30px;
+    height: 80px;
+    padding-top: 10px;
+}
+
+
+.rounded{
+    background-color: #FFFFFF;
+    border-top: 1px solid;
+    border-left: 1px solid;
+    border-bottom: 1px solid;
+    border-right: 1px solid;
+    border-radius: 15px!important;
+    border-color: #0000FF;
+}
+
+.StimaButton{
+    display: flex;
+    justify-content: center;
+}
+.btn-warning:hover, .btn-warning:focus{
+    color: #FFFFFF!important;
+}
+
+.AggiungiButton, .CalcolaButton, .ResetButton, .StimaButton{
+    margin-bottom: 16px;
+}
+
+.btn-warning{
+    color: #FFFFFF;
+}
+
+.Titoletto{
+    font-size: 20px;
+    text-align: center;
+    font-weight: bold;
+    color: #FF0000;
+}
+
+.main-Insert{
+    margin-left: 20px;
+    margin-right: 50px;
+}
+
+.RegrLin{
+    margin-left: 10%;
+}
+
+.main-Diagramma{
+    width: 800px;
+    height: 400px;
+}
+
+.DynamicPart{
+    max-height: 320px;
+    max-width: 410px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.warnings p{
+    color: #FF0000;
+    padding-left: 15px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}

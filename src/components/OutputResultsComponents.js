@@ -1,6 +1,7 @@
 import React from 'react';
 import i18next from 'i18next';
 import { LabelResult, Titoletto, Bottone, LabelInput } from './Components.js';
+import Counter from './Counter';
 
 export default class Results extends React.Component {
     renderLabelResult(val, r) {
@@ -110,6 +111,9 @@ export default class Results extends React.Component {
                             {result}
                         </span>
                     </div>
+                </div>
+                <div className="row">
+                    <Counter/>
                 </div>
             </div>
         );

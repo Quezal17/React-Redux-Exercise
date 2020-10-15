@@ -1,16 +1,22 @@
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 import './css/components.css';
-import Results from './OutputResultsComponents.js';
-import Diagram from './Diagram.js';
+import Results from './OutputResultsComponents';
+import Diagram from './Diagram';
 import i18next from 'i18next';
+import { Button, SecondaryTitle, LabelInput } from './Components';
+import {IState} from './PropsInterface';
 
-import { Button, SecondaryTitle, LabelInput } from './Components.js';
+interface IProps {}
 
-export default class RegrLin extends React.Component {
-    constructor(props) {
+export default class RegrLin extends React.Component<IProps, IState> {
+    constructor(props: IProps) {
         super(props);
 
-        this.state = {
+        this.state = this.getInitState();
+    }
+
+    getInitState() {
+        return {
             datasetName: '',
             axisXName: '',
             axisYName: '',
@@ -22,34 +28,34 @@ export default class RegrLin extends React.Component {
             estimateY: '',
             estimateXResult: [],
             estimateYResult: [],
-            averageX: '',
-            averageY: '',
-            varianceX: '',
-            varianceY: '',
-            devstdX: '',
-            devstdY: '',
-            covariance: '',
-            pearson: '',
-            coeffM: '',
-            coeffQ: '',
-            quantile: '',
-            mMin: '',
-            mMax: '',
-            qMin: '',
-            qMax: '',
+            averageX: 0,
+            averageY: 0,
+            varianceX: 0,
+            varianceY: 0,
+            devstdX: 0,
+            devstdY: 0,
+            covariance: 0,
+            pearson: 0,
+            coeffM: 0,
+            coeffQ: 0,
+            quantile: 0,
+            mMin: 0,
+            mMax: 0,
+            qMin: 0,
+            qMax: 0,
             confidMin: [],
             confidMax: [],
             maxY: 100,
-            alpha: 0.05
+            alpha: '0.05'
         };
     }
 
     checkValues() {
         const { values, alpha } = this.state;
-        if (values.length < 3 || alpha === '' || alpha < 0 || alpha > 1)
+        if (values.length < 3 || alpha === '' || parseFloat(alpha) < 0 || parseFloat(alpha) > 1)
             return false;
         for (let i = 0; i < values.length; i++) {
-            if (values[i].assex === '' || values[i].assey === '')
+            if (values[i].x === '' || values[i].y === '')
                 return false;
         }
         return true;
@@ -78,53 +84,22 @@ export default class RegrLin extends React.Component {
     }
 
     onClickReset() {
-        this.setState({
-            datasetName: '',
-            axisXName: '',
-            axisYName: '',
-            values: [],
-            x: [],
-            y: [],
-            Regr: [],
-            estimateX: '',
-            estimateY: '',
-            estimateXResult: [],
-            estimateYResult: [],
-            averageX: '',
-            averageY: '',
-            varianceX: '',
-            varianceY: '',
-            devstdX: '',
-            devstdY: '',
-            covariance: '',
-            pearson: '',
-            coeffM: '',
-            coeffQ: '',
-            quantile: '',
-            mMin: '',
-            mMax: '',
-            qMin: '',
-            qMax: '',
-            confidMin: [],
-            confidMax: [],
-            maxY: 100,
-            alpha: 0.05
-        })
+        this.setState(this.getInitState);
     }
 
     onClickEstimate() {
         const { estimateX, estimateY } = this.state;
-        if (estimateX !== '')
+        if (estimateX !== undefined)
             this.setEstimateY();
-        else if (estimateY !== '')
+        else if (estimateY !== undefined)
             this.setEstimateX();
     }
 
     setEstimateX() {
         const { estimateY, mMin, mMax, qMin, qMax } = this.state;
         let x = [];
-        x[0] = (estimateY - qMin) / mMin;
-        x[1] = (estimateY - qMax) / mMax;
+        x[0] = (parseFloat(estimateY) - qMin) / mMin;
+        x[1] = (parseFloat(estimateY) - qMax) / mMax;
         this.setState({
             estimateXResult: x,
             estimateYResult: []
@@ -134,8 +109,8 @@ export default class RegrLin extends React.Component {
     setEstimateY() {
         const { estimateX, mMin, mMax, qMin, qMax } = this.state;
         let y = [];
-        y[0] = mMin * estimateX + qMin;
-        y[1] = mMax * estimateX + qMax;
+        y[0] = mMin * parseFloat(estimateX) + qMin;
+        y[1] = mMax * parseFloat(estimateX) + qMax;
         this.setState({
             estimateXResult: [],
             estimateYResult: y
@@ -145,11 +120,11 @@ export default class RegrLin extends React.Component {
     onClickAdd() {
         const { values } = this.state;
         this.setState({
-            values: [...values, { x: "", y: "" }]
+            values: [...values, { x: '', y: '' }]
         })
     }
 
-    onClickDelete(index) {
+    onClickDelete(index: number) {
         const { values } = this.state;
         values.splice(index, 1);
         this.setState({
@@ -157,49 +132,49 @@ export default class RegrLin extends React.Component {
         })
     }
 
-    onChangeInputX(e, index) {
+    onChangeInputX(e: ChangeEvent<HTMLInputElement>, index: number) {
         const { values } = this.state;
-        values[index]["x"] = e.target.value;
-        this.setState({
-            values: values
-        })
+        values[index].x = e.target.value;
+            this.setState({
+               values: values
+        });
     }
 
-    onChangeInputY(e, index) {
+    onChangeInputY(e: ChangeEvent<HTMLInputElement>, index: number) {
         const { values } = this.state;
-        values[index]["y"] = e.target.value;
-        this.setState({
-            values: values
-        })
+        values[index].y = e.target.value;
+            this.setState({
+               values: values
+        });
     }
 
-    onChangeDatasetName(e) {
+    onChangeDatasetName(e: ChangeEvent<HTMLInputElement>) {
         let datasetName = e.target.value;
         this.setState({
             datasetName: datasetName
         })
     }
 
-    onChangeAxisXName(e) {
+    onChangeAxisXName(e: ChangeEvent<HTMLInputElement>) {
         let axisXName = e.target.value;
         this.setState({
             axisXName: axisXName
         })
     }
 
-    onChangeAxisYName(e) {
+    onChangeAxisYName(e: ChangeEvent<HTMLInputElement>) {
         let axisYName = e.target.value;
         this.setState({
             axisYName: axisYName
         })
     }
 
-    onChangeAlpha(e) {
+    onChangeAlpha(e: ChangeEvent<HTMLInputElement>) {
         let alpha = e.target.value;
         this.setState({ alpha: alpha })
     }
 
-    onChangeEstimateX(e) {
+    onChangeEstimateX(e: ChangeEvent<HTMLInputElement>) {
         let estimateX = e.target.value;
         this.setState({
             estimateX: estimateX,
@@ -209,7 +184,7 @@ export default class RegrLin extends React.Component {
         })
     }
 
-    onChangeEstimateY(e) {
+    onChangeEstimateY(e: ChangeEvent<HTMLInputElement>) {
         let estimateY = e.target.value;
         this.setState({
             estimateX: '',
@@ -322,20 +297,18 @@ export default class RegrLin extends React.Component {
 
     findXMinMax() {
         const { x } = this.state;
-        let min = '';
-        let max = '';
+        let min = x[0];
+        let max = x[0];
         let Regr = [];
-        min = x[0];
-        max = x[0];
         for (let i = 1; i < x.length; i++)
             if (x[i] < min)
                 min = x[i];
             else if (x[i] > max)
                 max = x[i];
 
-        Regr[0] = Number(min);
+        Regr[0] = min;
         Regr[1] = this.calculateEstimateY(min);
-        Regr[2] = Number(max);
+        Regr[2] = max;
         Regr[3] = this.calculateEstimateY(max);
         this.setState({
             Regr: Regr
@@ -345,7 +318,7 @@ export default class RegrLin extends React.Component {
     calculateQuantile() {
         const { x, alpha } = this.state;
         var { jStat } = require('jstat');
-        var ordine = 1 - (alpha / 2);
+        var ordine = 1 - (parseFloat(alpha) / 2);
         var r = jStat.studentt.inv(ordine, x.length - 2);
         this.setState({
             quantile: r
@@ -403,7 +376,7 @@ export default class RegrLin extends React.Component {
         })
     }
 
-    calculateEstimateY(x) {
+    calculateEstimateY(x: number) {
         const { coeffM, coeffQ } = this.state;
         return coeffM * x + coeffQ;
     }
@@ -417,7 +390,7 @@ export default class RegrLin extends React.Component {
         return adder;
     }
 
-    calculateS2RES(estimatesY) {
+    calculateS2RES(estimatesY: number[]) {
         const { y } = this.state;
         let s2res = 0;
         for (let i = 0; i < y.length; i++) {
@@ -426,7 +399,7 @@ export default class RegrLin extends React.Component {
         return s2res / (y.length - 2);
     }
 
-    renderInputLabel(word, id, type, value, event) {
+    renderInputLabel(word: string, id: string, type: string, value: string | number, event: (e: ChangeEvent<HTMLInputElement>) => void) {
         return (
             <div className="row">
                 <LabelInput
@@ -440,18 +413,18 @@ export default class RegrLin extends React.Component {
         );
     }
 
-    renderSecondaryTitle(val) {
+    renderSecondaryTitle(word: string) {
         return (
             <SecondaryTitle
-                word={val}
+                word={word}
             />
         );
     }
 
-    renderButton(val, action, name, css) {
+    renderButton(word: string, action: () => void, name: string, css: string) {
         return (
             <Button
-                word={val}
+                word={word}
                 onClick={action}
                 classe={css}
                 name={name}
@@ -557,8 +530,8 @@ export default class RegrLin extends React.Component {
                             onClick={() => this.onClickEstimate()}
                             resultX={estimateXResult}
                             resultY={estimateYResult}
-                            valueX={estimateX}
-                            valueY={estimateY}
+                            valueX={parseFloat(estimateX)}
+                            valueY={parseFloat(estimateY)}
                             mMin={mMin}
                             mMax={mMax}
                             qMin={qMin}

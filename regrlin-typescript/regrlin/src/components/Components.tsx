@@ -1,6 +1,8 @@
 import React from 'react';
+import {LabelInputProps, ButtonProps, SecondaryTitleProps, LabelResultProps} from './PropsInterface'
 
-export class LabelInput extends React.Component {
+export class LabelInput extends React.Component<LabelInputProps> {
+
     render() {
         return (
                 <div className="col input-group mb-3">
@@ -13,7 +15,8 @@ export class LabelInput extends React.Component {
     }
 }
 
-export class Button extends React.Component {
+export class Button extends React.Component<ButtonProps> {
+
     render() {
         return (
             <div className={"col "+this.props.name}>
@@ -23,7 +26,8 @@ export class Button extends React.Component {
     }
 }
 
-export class SecondaryTitle extends React.Component {
+export class SecondaryTitle extends React.Component<SecondaryTitleProps> {
+
     render() {
         return (
                 <div className="col STitle">
@@ -33,7 +37,8 @@ export class SecondaryTitle extends React.Component {
     }
 }
 
-export class LabelResult extends React.Component {
+export class LabelResult extends React.Component<LabelResultProps> {
+
     render() {
         return (
             <div className="col LabelResult">
@@ -41,7 +46,7 @@ export class LabelResult extends React.Component {
                     <div className="input-group-prepend">
                         <span className="input-group-text">{this.props.word}</span>
                     </div>
-                    <label className="form-control">{this.props.result.toString()}</label>
+                    <label className="form-control">{this.props.result}</label>
                 </div>
 
             </div>

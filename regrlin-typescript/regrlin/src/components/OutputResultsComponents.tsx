@@ -1,30 +1,32 @@
-import React from 'react';
+import React, {ChangeEvent} from 'react';
 import i18next from 'i18next';
-import { LabelResult, SecondaryTitle, Button, LabelInput } from './Components.js';
+import { LabelResult, SecondaryTitle, Button, LabelInput } from './Components';
 import Counter from './Counter';
+import {ResultsProps} from './PropsInterface';
 
-export default class Results extends React.Component {
-    renderLabelResult(val, r) {
+export default class Results extends React.Component<ResultsProps> {
+    
+    renderLabelResult(word: string, result: number) {
         return (
             <LabelResult
-                word={val}
-                result={r.toString()}
+                word={word}
+                result={result.toFixed(3)}
             />
         );
     }
 
-    renderSecondaryTitle(val) {
+    renderSecondaryTitle(word: string) {
         return (
             <SecondaryTitle
-                word={val}
+                word={word}
             />
         );
     }
 
-    renderButton(val, action, name, css) {
+    renderButton(word: string, action: () => void, name: string, css: string) {
         return (
             <Button
-                word={val}
+                word={word}
                 onClick={action}
                 classe={css}
                 name={name}
@@ -32,7 +34,7 @@ export default class Results extends React.Component {
         );
     }
 
-    renderInputLabel(word, id, type, value, event) {
+    renderInputLabel(word: string, id: string, type: string, value: string | number, event: (e: ChangeEvent<HTMLInputElement>) => void) {
         return (
             <LabelInput
                 word={word}
@@ -45,22 +47,6 @@ export default class Results extends React.Component {
     }
 
     render() {
-        let coeffM = Number(this.props.coeffM);
-        coeffM = coeffM.toFixed(3);
-        let coeffQ = Number(this.props.coeffQ);
-        coeffQ = coeffQ.toFixed(3);
-        let covarianza = Number(this.props.covarianza);
-        covarianza = covarianza.toFixed(3);
-        let pearson = Number(this.props.pearson);
-        pearson = pearson.toFixed(3);
-        let qMin = Number(this.props.qMin);
-        qMin = qMin.toFixed(3);
-        let qMax = Number(this.props.qMax);
-        qMax = qMax.toFixed(3);
-        let mMin = Number(this.props.mMin);
-        mMin = mMin.toFixed(3);
-        let mMax = Number(this.props.mMax);
-        mMax = mMax.toFixed(3);
         let resultEstimateX = this.props.resultX;
         let resultEstimateY = this.props.resultY;
         let result = '';
@@ -77,12 +63,12 @@ export default class Results extends React.Component {
                     </div>
                 </div>
                 <div className="row">
-                    {this.renderLabelResult(i18next.t('mCoefficientTag'), coeffM)}
-                    {this.renderLabelResult(i18next.t('qCoefficientTag'), coeffQ)}
+                    {this.renderLabelResult(i18next.t('mCoefficientTag'), this.props.coeffM)}
+                    {this.renderLabelResult(i18next.t('qCoefficientTag'), this.props.coeffQ)}
                 </div>
                 <div className="row">
-                    {this.renderLabelResult(i18next.t('covarianceTag'), covarianza)}
-                    {this.renderLabelResult(i18next.t('pearsonCoefficient'), pearson)}
+                    {this.renderLabelResult(i18next.t('covarianceTag'), this.props.covariance)}
+                    {this.renderLabelResult(i18next.t('pearsonCoefficient'), this.props.pearson)}
                 </div>
                 <div className="row">
                     {this.renderSecondaryTitle(i18next.t('confidenceIntervalTitle'))}
@@ -91,7 +77,7 @@ export default class Results extends React.Component {
                 <div className="row">
                     <div className="col">
                         <span>
-                            m: [{mMin} , {mMax}]
+                            m: [{this.props.mMin.toFixed(3)} , {this.props.mMax.toFixed(3)}]
                         </span>
                     </div>
                     <div className="col"></div>
@@ -101,7 +87,7 @@ export default class Results extends React.Component {
                 <div className="row">
                     <div className="col">
                         <span>
-                            q: [{qMin} , {qMax}]
+                            q: [{this.props.qMin.toFixed(3)} , {this.props.qMax.toFixed(3)}]
                         </span>
                     </div>
                     <div className="col"></div>

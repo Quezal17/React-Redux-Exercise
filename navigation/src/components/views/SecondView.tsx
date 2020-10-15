@@ -6,7 +6,6 @@ export class SecondView extends React.Component {
             <div>
                 <h1>Second View</h1>
                 <p>This is the Second View</p>
-                <a href='/third'>Go to the third view</a>
             </div>
         );
     }

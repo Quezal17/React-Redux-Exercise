@@ -6,7 +6,6 @@ export class ThirdView extends React.Component {
             <div>
                 <h1>Third View</h1>
                 <p>This is the Third View</p>
-                <a href='/'>Go back to first one</a>
             </div>
         );
     }

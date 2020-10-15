@@ -26,7 +26,7 @@ export default class Diagram extends React.PureComponent<DiagramProps> {
         const myChartRef = this.chartRef.current;
 
         if (myChartRef) {
-            const { datasetName, axisXName, axisYName, x, y, maxY } = this.props;
+            const { datasetName, axisXName, axisYName, Regr, confidMin, confidMax, x, y, maxY } = this.props;
 
             let values: IData[] = [];
             let obj: IData;
@@ -41,7 +41,7 @@ export default class Diagram extends React.PureComponent<DiagramProps> {
             if (typeof myLineChart !== "undefined") myLineChart.destroy();
 
             myLineChart = new Chart(myChartRef, {
-                type: "scatterWithErrorBars",
+                type: "scatter",
                 data: {
                     datasets: [
                         {
@@ -53,6 +53,57 @@ export default class Diagram extends React.PureComponent<DiagramProps> {
                             pointRadius: 6,
                             pointHoverRadius: 6,
                             order: 1
+                        }, {
+                            data: [
+                                {
+                                    x: Regr[0],
+                                    y: Regr[1]
+                                },
+                                {
+                                    x: Regr[2],
+                                    y: Regr[3]
+                                }
+                            ],
+                            fill: false,
+                            showLine: true,
+                            borderColor: "#FFA500",
+                            borderDash: [10, 10],
+                            pointRadius: 0,
+                            order: 2
+                        },
+                        {
+                            data: [
+                                {
+                                    x: confidMin[0],
+                                    y: confidMin[1]
+                                },
+                                {
+                                    x: confidMin[2],
+                                    y: confidMin[3]
+                                }
+                            ],
+                            fill: false,
+                            showLine: true,
+                            borderColor: "#8F8F8F",
+                            pointRadius: 0,
+                            order: 3
+                        },
+                        {
+                            data: [
+                                {
+                                    x: confidMax[0],
+                                    y: confidMax[1]
+                                },
+                                {
+                                    x: confidMax[2],
+                                    y: confidMax[3]
+                                }
+                            ],
+                            fill: false,
+                            showLine: true,
+                            borderColor: "#8F8F8F",
+                            pointRadius: 0,
+                            order: 4
                         }
                     ]
                 },

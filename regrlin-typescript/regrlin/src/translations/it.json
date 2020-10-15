@@ -1,0 +1,22 @@
+{
+    "title": "Regressione Lineare",
+    "insertDataTitle": "Inserisci dati",
+    "nameDatasetTag": "Nome Dataset",
+    "nameXAxisTag": "Nome Asse X",
+    "nameYAxisTag": "Nome Asse Y",
+    "alphaTag": "Alfa",
+    "addValueButtonText": "Aggiungi valore",
+    "deleteButtonText": "Rimuovi",
+    "calculateButtonText": "Calcola",
+    "resetButtonText": "Reset",
+    "insert3ValuesWarning": "Inserisci almeno 3 valori",
+    "alphaWarning": "Alfa compreso tra [0, 1]",
+    "lineEquationTag": "Equazione della retta",
+    "mCoefficientTag": "Coefficiente M",
+    "qCoefficientTag": "Coefficiente Q",
+    "covarianceTag": "Covarianza",
+    "pearsonCoefficient": "Coefficiente di Pearson",
+    "confidenceIntervalTitle": "Intervallo di confidenza",
+    "estimatedValuesTitle": "Stima dei valori",
+    "estimateButtonText": "Stima"
+}

@@ -1,0 +1,22 @@
+{
+    "title": "Linear Regression",
+    "insertDataTitle": "Insert data",
+    "nameDatasetTag": "Dataset Name",
+    "nameXAxisTag": "Axis X Name",
+    "nameYAxisTag": "Axis Y Name",
+    "alphaTag": "Alpha",
+    "addValueButtonText": "Add Value",
+    "deleteButtonText": "Delete",
+    "calculateButtonText": "Calculate",
+    "resetButtonText": "Reset",
+    "insert3ValuesWarning": "Insert 3 values at least",
+    "alphaWarning": "Alpha between [0, 1]",
+    "lineEquationTag": "Line Equation",
+    "mCoefficientTag": "M Coefficient",
+    "qCoefficientTag": "Q Coefficient",
+    "covarianceTag": "Covariance",
+    "pearsonCoefficient": "Pearson Coefficient",
+    "confidenceIntervalTitle": "Confidence Interval",
+    "estimatedValuesTitle": "Estimated Values",
+    "estimateButtonText": "Estimate"
+}

@@ -1,4 +1,4 @@
-import { INCREMENT, DECREMENT, ActionTypes } from '../actions/types'
+import { INCREMENT, DECREMENT, ActionTypes } from '../../actions/types/types'
 
 export default function counterReducer(state = 0, action: ActionTypes): number {
     switch (action.type) {

@@ -1,10 +1,10 @@
 import React, { ChangeEvent } from 'react';
 import './css/components.css';
-import Results from './OutputResultsComponents';
-import Diagram from './Diagram';
+import Results from './OutputResults/OutputResults';
+import Diagram from './Diagram/Diagram';
 import i18next from 'i18next';
 import { Button, SecondaryTitle, LabelInput } from './Components';
-import {IState} from './PropsInterface';
+import {IState} from './PropsInterfaces/PropsInterfaces';
 
 interface IProps {}
 

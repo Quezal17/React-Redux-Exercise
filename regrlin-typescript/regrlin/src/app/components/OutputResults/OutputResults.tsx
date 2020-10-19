@@ -1,8 +1,8 @@
 import React, {ChangeEvent} from 'react';
 import i18next from 'i18next';
-import { LabelResult, SecondaryTitle, Button, LabelInput } from './Components';
-import Counter from './Counter';
-import {ResultsProps} from './PropsInterface';
+import { LabelResult, SecondaryTitle, Button, LabelInput } from '../Components';
+import Counter from '../Counter';
+import {ResultsProps} from '../PropsInterfaces/PropsInterfaces';
 
 export default class Results extends React.Component<ResultsProps> {
     

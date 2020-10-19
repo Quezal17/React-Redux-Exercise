@@ -1,5 +1,5 @@
 import React from 'react';
-import {LabelInputProps, ButtonProps, SecondaryTitleProps, LabelResultProps} from './PropsInterface'
+import {LabelInputProps, ButtonProps, SecondaryTitleProps, LabelResultProps} from './PropsInterfaces/PropsInterfaces'
 
 export class LabelInput extends React.Component<LabelInputProps> {
 

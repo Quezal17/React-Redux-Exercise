@@ -1,6 +1,6 @@
 import React, { createRef } from 'react';
 import Chart from 'chart.js';
-import { DiagramProps } from './PropsInterface';
+import { DiagramProps } from '../PropsInterfaces/PropsInterfaces';
 import 'chartjs-chart-error-bars';
 
 let myLineChart: Chart;

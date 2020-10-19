@@ -1,4 +1,4 @@
-import { INCREMENT, DECREMENT, ActionTypes } from './types';
+import { INCREMENT, DECREMENT, ActionTypes } from './types/types';
 
 export function increment(number: number): ActionTypes {
   return {

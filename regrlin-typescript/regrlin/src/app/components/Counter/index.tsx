@@ -1,7 +1,7 @@
 import React from 'react';
-import { increment, decrement } from '../actions/actions';
+import { increment, decrement } from '../../redux/actions/actions';
 import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from '../reducers';
+import { RootState } from '../../redux/reducers';
 
 export default function Counter() {
     const counter = useSelector((state: RootState) => state.counter);
